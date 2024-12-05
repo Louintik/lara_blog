@@ -11,6 +11,6 @@ class UpdateController extends Controller
     public function __invoke(UpdateRequest $request , Category $category) {
         $data = $request->validated();
         $category->update($data);
-        return view('admin.categories.show', compact('category' )); //передаем чтобы поля были заполнены
+        return view('admin.category.show', compact('category' )); //передаем чтобы поля были заполнены
     }
 }
