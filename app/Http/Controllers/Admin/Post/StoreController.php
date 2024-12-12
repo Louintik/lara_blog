@@ -9,14 +9,19 @@ use Illuminate\Support\Facades\Storage;
 
 class StoreController extends Controller {
     public function __invoke(StoreRequest $request) {
-        $data = $request->validated();
+        try {
+            $data = $request->validated();
+            $tadIds = $data['tag_ids'];
+            unset($data['tag_ids']);
 
-        $data['main_image']    = Storage::put('/images', $data['main_image']);
-        $data['preview_image'] = Storage::put('/images', $data['preview_image']);
-        //$data['main_image'] - то где находится файл
-        //Storage::put() - помещаем в Storage
-        //$data['main_image']    = - кладем путь переопределяя переменную
-        Post::firstorcreate($data);
+            $data['main_image']    = Storage::put('/images', $data['main_image']);
+            $data['preview_image'] = Storage::put('/images', $data['preview_image']);
+            $post = Post::firstOrCreate($data);
+            $post->tags()->attach($tadIds);
+
+        } catch(\Exception $exception) {
+            abort(404);
+        }
 
         return redirect()->route('admin.post.index');
     }

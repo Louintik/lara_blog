@@ -28,6 +28,10 @@ class StoreRequest extends FormRequest
             'content' => 'required|string',
             'main_image' => 'required|file',
             'preview_image' => 'required|file',
+            'category_id' => 'required|integer|exists:categories,id',
+            'tag_ids' => 'nullable|array',
+            'tag_ids.*' => 'nullable|integer|exists:tags,id',
+            //.* означает что дальнейшие правила распространяются на все что внутри тега tags_ids
         ];
     }
 }

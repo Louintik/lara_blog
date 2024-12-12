@@ -6,11 +6,13 @@
     <title>AdminLTE 3 | Dashboard</title>
 
     <!-- Font Awese -->">
+    <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Ionics -->">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css  ">
     <!-- Theme ste -->">
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+
 
     <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
     <!-- overlayScrollbs -->">
@@ -76,6 +78,7 @@
 <script src="{{ asset('plugins/jquery/jquery.min.js')}}"></script>
 <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js')}}"></script>
 <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{ asset('plugins/select2/js/select2.full.min.js')}}"></script>
 <script src="{{ asset('plugins/summernote/summernote-bs4.min.js')}}"></script>
 <script>
     $.widget.bridge('uibutton', $.ui.button)
@@ -102,6 +105,13 @@
     $(function () {
         bsCustomFileInput.init();
     });
+    $('.select2').select2()
 </script>
+<style>
+    .custom-file-input:lang(en)~.custom-file-label::after {
+        content: '...';
+    /*    тут указывается что будет на кнопке */
+    }
+</style>
 </body>
 </html>
