@@ -20,6 +20,8 @@ Route::group(['namespace' => 'Main'], function() {
 Route::group([
     'namespace' => 'Admin',
     'prefix'    => 'admin',
+    'middleware' => ['auth', 'admin'] //auth это имя мидлвеера из kernel из $routeMiddleware
+    //такой порядок так как мы сперва проверяем авторизоан ли пользователь а потом админ ли он
 ], function() {
     Route::group(['namespace' => 'Main'], function() {
         Route::get('/', 'IndexController');
