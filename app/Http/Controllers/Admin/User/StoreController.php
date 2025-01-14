@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\StoreRequest;
+use App\Jobs\StoreUserJob;
 use App\Mail\User\PasswordMail;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -15,11 +16,9 @@ class StoreController extends Controller
 {
     public function __invoke(StoreRequest $request) {
         $data = $request->validated();
-        $password = Str::random(10);
-        $data['password'] = Hash::make($password);
-        $user = User::firstOrCreate(['email' =>  $data['email']],$data);
-        Mail::to($data['email'])->send(new PasswordMail($password)); // в PasswordMail нужно имплементировать
-        event(new Registered($user)); //он активирует метод из SendVerifyWithQueueNotification.php
+
+        StoreUserJob::dispatch($data);
+
         return redirect()->route('admin.user.index');
     }
 }
