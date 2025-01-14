@@ -20,8 +20,7 @@ Route::group(['namespace' => 'Main'], function() {
 Route::group([
     'namespace' => 'Admin',
     'prefix'    => 'admin',
-    'middleware' => ['auth', 'admin'] //auth это имя мидлвеера из kernel из $routeMiddleware
-    //такой порядок так как мы сперва проверяем авторизоан ли пользователь а потом админ ли он
+    'middleware' => ['auth', 'admin', 'verified']
 ], function() {
     Route::group(['namespace' => 'Main'], function() {
         Route::get('/', 'IndexController');
@@ -76,4 +75,4 @@ Route::group([
     });
 });
 
-Auth::routes();
+Auth::routes(['verify' => true ]);
